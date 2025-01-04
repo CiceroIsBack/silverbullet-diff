@@ -4,9 +4,6 @@
 
 ## Installation
 
-If you run SilverBullet [using Docker](https://silverbullet.md/Install/Docker), Git is already included.
-Otherwise install Git from your system's package manager, or following [Git documentation](https://git-scm.com/).
-
 Open your `PLUGS` note in SilverBullet and add this plug to the list:
 
 ```yaml
@@ -14,6 +11,13 @@ Open your `PLUGS` note in SilverBullet and add this plug to the list:
 ```
 
 Then run the {[Plugs: Update]} command and off you go!
+
+### Requirements
+
+If you run SilverBullet [using Docker](https://silverbullet.md/Install/Docker), Git is already included.
+Otherwise install Git from your system's package manager, or following [Git documentation](https://git-scm.com/).
+
+Since the plug depends on a shell command, it **will not work** with [`SB_SHELL_BACKEND=off`](https://silverbullet.md/Install/Configuration#Security) or on hosts that don't offer shell like [Deno Deploy](https://silverbullet.md/Install/Deno%20Deploy).
 
 ## Usage
 
@@ -37,6 +41,7 @@ grep:
   smartCase: true
 
   # by default shows results in a virtual page, like the built-in search
+  # when set to true, the results will be saved to a regular markdown file
   saveResults: false
 
   # visually distinguish >>>matched part<<< in shown context
