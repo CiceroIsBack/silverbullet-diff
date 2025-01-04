@@ -13,10 +13,7 @@ export async function showVersion() {
     const gitVersion = stdout.split("\n")[0];
     await editor.flashNotification(`Grep Plug ${VERSION} ${gitVersion}`);
   } catch {
-    await editor.flashNotification(
-      "Could not run 'git' command, make sure Git is in PATH",
-      "error",
-    );
+    await commandError();
   }
 }
 
@@ -78,10 +75,7 @@ async function grep(
     }
   } catch (err) {
     console.error(err);
-    await editor.flashNotification(
-      "Error running 'git' command, make sure Git is in PATH",
-      "error",
-    );
+    commandError();
     return;
   }
 
@@ -284,4 +278,11 @@ function normalizePath(path: string): string {
 // from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions#escaping
 function escapeRegExp(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+}
+
+async function commandError() {
+  await editor.flashNotification(
+    "Error running command, ensure 'git' is in PATH and server allows shell commands",
+    "error",
+  );
 }
