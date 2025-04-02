@@ -1,17 +1,16 @@
 import { datastore, editor, shell, system } from "$sb/syscalls.ts";
 import { FileMeta } from "$sb/types.ts";
 
-const VERSION = "2.3.1";
+const VERSION = "0.0.1";
 
-const resultPageSaved = "GREP RESULT";
-const resultPageVirtual = "GREP RESULT 🔍";
+const diffPageVirtual = "DIFF RESULT";
 
 export async function showVersion() {
   try {
-    const { stdout } = await shell.run("git", ["--version"]);
+    const { stdout } = await shell.run("diff", ["--version"]);
     // Version info is in the first line
-    const gitVersion = stdout.split("\n")[0];
-    await editor.flashNotification(`Grep Plug ${VERSION} ${gitVersion}`);
+    const diffVersion = stdout.split("\n")[0];
+    await editor.flashNotification(`Diff Plug ${VERSION} ${diffVersion}`);
   } catch {
     await commandError();
   }
@@ -141,16 +140,12 @@ async function grep(
     return -(a.matches.length - b.matches.length);
   });
 
-  const text = `Search results for ${
-    literal ? "text" : "pattern"
-  } **\`${pattern}\`**${
-    folder !== "." ? "\n**found inside folder:** " + folder + "\n" : ""
-  }\n${
-    fileMatches
+  const text = `Search results for ${literal ? "text" : "pattern"
+    } **\`${pattern}\`**${folder !== "." ? "\n**found inside folder:** " + folder + "\n" : ""
+    }\n${fileMatches
       .map(
         (fm) =>
-          `\n## [[${fm.page}]] (${fm.matches.length} ${
-            fm.matches.length > 1 ? "matches" : "match"
+          `\n## [[${fm.page}]] (${fm.matches.length} ${fm.matches.length > 1 ? "matches" : "match"
           })\n` +
           fm.matches
             .map(
@@ -160,7 +155,7 @@ async function grep(
             .join("\n"),
       )
       .join("\n")
-  }
+    }
     `;
   return text;
 }
