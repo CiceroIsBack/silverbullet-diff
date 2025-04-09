@@ -2,13 +2,8 @@ name: diff
 requiredPermissions:
   - shell
 functions:
-  showVersion:
-    path: grep.ts:showVersion
-    command:
-      name: "Diff: Version"
-      priority: -2
   showDiff:
-    path: diff.ts:searchText
+    path: diff.ts:openDiff
     command:
       name: "Diff: Show Diff"
       priority: 1
